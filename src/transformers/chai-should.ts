@@ -550,6 +550,16 @@ export default function transformer(fileInfo, api, options) {
               }
             }
 
+            if (p.value.callee.property.name.toLowerCase().includes('include') && chainContains('not', value.callee, 'not')) {
+              return createCall(
+                'toContain',
+                args,
+                rest,
+                containsNot,
+              );
+            }
+
+
             return createCall(
               'toEqual',
               [

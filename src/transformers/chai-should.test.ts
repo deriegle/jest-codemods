@@ -772,6 +772,26 @@ testChanged(
     `
 )
 
+testChanged(
+  'works when using not.to chaining',
+  `
+    describe('Names', () => {
+        it('should have the correct names', () => {
+          expect(names).to.include('George');
+          expect(names).not.to.include('Bob');
+        });
+    });
+  `,
+  `
+    describe('Names', () => {
+        it('should have the correct names', () => {
+          expect(names).toEqual(expect.arrayContaining(['George']));
+          expect(names).not.toContain('Bob');
+        });
+    });
+  `
+)
+
 it('warns about not supported assertions part 1', () => {
   wrappedPlugin(`
         expect([1, 2, 3]).to.have.any.keys([1, 2]);
